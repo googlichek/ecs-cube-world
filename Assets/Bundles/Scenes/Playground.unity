@@ -180,6 +180,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _worldSize: 100
+  _strength: 0.1
+  _scale: 0.01
   _sandPrefab: {fileID: 160782824854442517, guid: eecfbaf1c76574236aec46ed21e7d3cd, type: 3}
   _dirtPrefab: {fileID: 4419293882874314593, guid: 1bd5ac0c14d854abdb3461ff0d53ab8f, type: 3}
   _grassPrefab: {fileID: 2266591954047313924, guid: a2295e51741b743afa1bf64859d6f753, type: 3}
@@ -261,8 +263,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1586459614}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: -0.24745004, y: 0.12802334, z: -0.033004895, w: -0.95983815}
+  m_LocalPosition: {x: 33.684837, y: 63.42438, z: -153.32133}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

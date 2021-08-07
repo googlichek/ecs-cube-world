@@ -9,6 +9,12 @@ namespace Game.Scripts
         [SerializeField] [Range(0, 1024)]
         private int _worldSize = 0;
 
+        [SerializeField] [Range(0.1f, 10f)]
+        private float _strength = 0;
+
+        [SerializeField] [Range(0.01f, 1f)]
+        private float _scale = 0;
+
         [Space] [SerializeField]
         private GameObject _sandPrefab = default;
 
@@ -42,6 +48,19 @@ namespace Game.Scripts
                     _world.EntityManager.SetComponentData(instance, new Translation() { Value = position });
                 }
             }
+
+            UpdateStaticFields();
+        }
+
+        void OnValidate()
+        {
+            UpdateStaticFields();
+        }
+
+        private void UpdateStaticFields()
+        {
+            GameDataManager.Strength = _strength;
+            GameDataManager.Scale = _scale;
         }
     }
 }
