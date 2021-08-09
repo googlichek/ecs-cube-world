@@ -1,5 +1,7 @@
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Rendering;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -7,6 +9,13 @@ namespace Game.Scripts
 {
     public class LandscapeSystem : SystemBase
     {
+        private EntityQuery _query = default;
+
+        protected override void OnCreate()
+        {
+            _query = GetEntityQuery(typeof(BlockData));
+        }
+
         protected override void OnUpdate()
         {
             var strength1 = GameDataManager.Strength1;
@@ -29,7 +38,38 @@ namespace Game.Scripts
 
                     translation.Value = new float3(vertex.x, height, vertex.z);
                 })
-                .Schedule();
+                .Schedule(Dependency)
+                .Complete();
+
+            if (!GameDataManager.HasDataChanged)
+                return;
+
+            using (var blockEntities = _query.ToEntityArray(Allocator.TempJob))
+            {
+                foreach (var entity in blockEntities)
+                {
+                    var height = EntityManager.GetComponentData<Translation>(entity).Value.y;
+
+                    Entity block;
+                    if (height <= GameDataManager.DirtLevel)
+                        block = GameDataManager.DirtEntity;
+                    else if (height <= GameDataManager.GrassLevel)
+                        block = GameDataManager.GrassEntity;
+                    else if (height <= GameDataManager.RockLevel)
+                        block = GameDataManager.RockEntity;
+                    else if (height <= GameDataManager.SnowLevel)
+                        block = GameDataManager.SnowEntity;
+                    else
+                        block = GameDataManager.SandEntity;
+
+                    var colorRenderMesh = EntityManager.GetSharedComponentData<RenderMesh>(block);
+                    var entityRenderMesh = EntityManager.GetSharedComponentData<RenderMesh>(entity);
+                    entityRenderMesh.material = colorRenderMesh.material;
+                    EntityManager.SetSharedComponentData(entity, entityRenderMesh);
+                }
+            }
+
+            GameDataManager.HasDataChanged = false;
         }
     }
 }

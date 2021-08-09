@@ -27,6 +27,21 @@ namespace Game.Scripts
         [SerializeField] [Range(0.01f, 1f)]
         private float _scale3 = 0;
 
+        [Space] [SerializeField] [Range(0, 100)]
+        private float _sandLevel = 0;
+
+        [SerializeField] [Range(0, 100)]
+        private float _dirtLevel = 0;
+
+        [SerializeField] [Range(0, 100)]
+        private float _grassLevel = 0;
+
+        [SerializeField] [Range(0, 100)]
+        private float _rockLevel = 0;
+
+        [SerializeField] [Range(0, 100)]
+        private float _snowLevel = 0;
+
         [Space] [SerializeField]
         private GameObject _sandPrefab = default;
 
@@ -49,14 +64,18 @@ namespace Game.Scripts
             _world = World.DefaultGameObjectInjectionWorld;
             var settings = GameObjectConversionSettings.FromWorld(_world, null);
 
-            var sandEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(_sandPrefab, settings);
+            GameDataManager.SandEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(_sandPrefab, settings);
+            GameDataManager.DirtEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(_dirtPrefab, settings);
+            GameDataManager.GrassEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(_grassPrefab, settings);
+            GameDataManager.RockEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(_rockPrefab, settings);
+            GameDataManager.SnowEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(_snowPrefab, settings);
 
             for (var z = -_worldSize; z <= _worldSize; z++)
             {
                 for (var x = -_worldSize; x <= _worldSize; x++)
                 {
                     var position = new Vector3(x, 0, z);
-                    var instance = _world.EntityManager.Instantiate(sandEntity);
+                    var instance = _world.EntityManager.Instantiate(GameDataManager.SandEntity);
                     _world.EntityManager.SetComponentData(instance, new Translation() { Value = position });
                 }
             }
@@ -77,6 +96,14 @@ namespace Game.Scripts
             GameDataManager.Scale1 = _scale1;
             GameDataManager.Scale2 = _scale2;
             GameDataManager.Scale3 = _scale3;
+
+            GameDataManager.SandLevel = _sandLevel;
+            GameDataManager.DirtLevel = _dirtLevel;
+            GameDataManager.GrassLevel = _grassLevel;
+            GameDataManager.RockLevel = _rockLevel;
+            GameDataManager.SnowLevel = _snowLevel;
+
+            GameDataManager.HasDataChanged = true;
         }
     }
 }

@@ -180,12 +180,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _worldSize: 100
-  _strength1: 1
+  _strength1: 7
   _strength2: 3
   _strength3: 5
   _scale1: 0.1
   _scale2: 0.2
   _scale3: 0.3
+  _sandLevel: 2
+  _dirtLevel: 4
+  _grassLevel: 6
+  _rockLevel: 8
+  _snowLevel: 10
   _sandPrefab: {fileID: 160782824854442517, guid: eecfbaf1c76574236aec46ed21e7d3cd, type: 3}
   _dirtPrefab: {fileID: 4419293882874314593, guid: 1bd5ac0c14d854abdb3461ff0d53ab8f, type: 3}
   _grassPrefab: {fileID: 2266591954047313924, guid: a2295e51741b743afa1bf64859d6f753, type: 3}
