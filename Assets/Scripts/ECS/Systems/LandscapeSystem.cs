@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Game.Scripts
 {
+    [DisableSystemOnStart]
     public class LandscapeSystem : SystemBase
     {
         private EntityQuery _query = default;
