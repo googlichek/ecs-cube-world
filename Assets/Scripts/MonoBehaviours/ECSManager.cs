@@ -9,11 +9,23 @@ namespace Game.Scripts
         [SerializeField] [Range(0, 1024)]
         private int _worldSize = 0;
 
+        [Space] [SerializeField] [Range(0.1f, 10f)]
+        private float _strength1 = 0;
+        
         [SerializeField] [Range(0.1f, 10f)]
-        private float _strength = 0;
+        private float _strength2 = 0;
+        
+        [SerializeField] [Range(0.1f, 10f)]
+        private float _strength3 = 0;
 
+        [Space] [SerializeField] [Range(0.01f, 1f)]
+        private float _scale1 = 0;
+        
         [SerializeField] [Range(0.01f, 1f)]
-        private float _scale = 0;
+        private float _scale2 = 0;
+        
+        [SerializeField] [Range(0.01f, 1f)]
+        private float _scale3 = 0;
 
         [Space] [SerializeField]
         private GameObject _sandPrefab = default;
@@ -59,8 +71,12 @@ namespace Game.Scripts
 
         private void UpdateStaticFields()
         {
-            GameDataManager.Strength = _strength;
-            GameDataManager.Scale = _scale;
+            GameDataManager.Strength1 = _strength1;
+            GameDataManager.Strength2 = _strength2;
+            GameDataManager.Strength3 = _strength3;
+            GameDataManager.Scale1 = _scale1;
+            GameDataManager.Scale2 = _scale2;
+            GameDataManager.Scale3 = _scale3;
         }
     }
 }

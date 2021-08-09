@@ -9,21 +9,27 @@ namespace Game.Scripts
     {
         protected override void OnUpdate()
         {
-            var strength = GameDataManager.Strength;
-            var scale = GameDataManager.Scale;
+            var strength1 = GameDataManager.Strength1;
+            var strength2 = GameDataManager.Strength2;
+            var strength3 = GameDataManager.Strength3;
+            var scale1 = GameDataManager.Scale1;
+            var scale2 = GameDataManager.Scale2;
+            var scale3 = GameDataManager.Scale3;
 
-            Dependency =
-                Entities
-                    .ForEach((ref Translation translation, ref BlockData blockData) =>
-                    {
-                        var vertex = translation.Value;
-                        var perlin1 = Mathf.PerlinNoise(vertex.x * scale, vertex.z * scale) * strength;
+            Entities
+                .ForEach((ref Translation translation, ref BlockData blockData) =>
+                {
+                    var vertex = translation.Value;
 
-                        translation.Value = new float3(vertex.x, perlin1, vertex.z);
-                    })
-                    .Schedule(Dependency);
+                    var perlin1 = Mathf.PerlinNoise(vertex.x * scale1, vertex.z * scale1) * strength1;
+                    var perlin2 = Mathf.PerlinNoise(vertex.x * scale2, vertex.z * scale2) * strength2;
+                    var perlin3 = Mathf.PerlinNoise(vertex.x * scale3, vertex.z * scale3) * strength3;
 
-            Dependency.Complete();
+                    var height = perlin1 + perlin2 + perlin3;
+
+                    translation.Value = new float3(vertex.x, height, vertex.z);
+                })
+                .Schedule();
         }
     }
 }
