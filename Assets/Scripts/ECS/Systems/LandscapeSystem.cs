@@ -25,10 +25,12 @@ namespace Game.Scripts
             var scale2 = GameDataManager.Scale2;
             var scale3 = GameDataManager.Scale3;
 
+            float3 offset = GameDataManager.PlayerPosition;
+
             Entities
                 .ForEach((ref Translation translation, ref BlockData blockData) =>
                 {
-                    var vertex = translation.Value;
+                    var vertex = blockData.InitialPosition + offset;
 
                     var perlin1 = Mathf.PerlinNoise(vertex.x * scale1, vertex.z * scale1) * strength1;
                     var perlin2 = Mathf.PerlinNoise(vertex.x * scale2, vertex.z * scale2) * strength2;

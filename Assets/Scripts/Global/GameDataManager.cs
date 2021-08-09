@@ -1,9 +1,12 @@
 using Unity.Entities;
+using UnityEngine;
 
 namespace Game.Scripts
 {
     public static class GameDataManager
     {
+        public static Vector3 PlayerPosition;
+
         public static float Strength1;
         public static float Strength2;
         public static float Strength3;

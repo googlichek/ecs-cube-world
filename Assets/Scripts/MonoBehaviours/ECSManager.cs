@@ -6,7 +6,10 @@ namespace Game.Scripts
 {
     public class ECSManager : MonoBehaviour
     {
-        [SerializeField] [Range(0, 1024)]
+        [SerializeField]
+        private Drive _player = default;
+
+        [Space] [SerializeField] [Range(0, 1024)]
         private int _worldSize = 0;
 
         [Space] [SerializeField] [Range(0.1f, 10f)]
@@ -74,13 +77,33 @@ namespace Game.Scripts
             {
                 for (var x = -_worldSize; x <= _worldSize; x++)
                 {
+                    var height = Mathf.PerlinNoise(x * _scale1, z * _scale1) * _strength1;
                     var position = new Vector3(x, 0, z);
-                    var instance = _world.EntityManager.Instantiate(GameDataManager.SandEntity);
+                    Entity instance;
+
+                    
+                    if (height <= GameDataManager.DirtLevel)
+                        instance = _world.EntityManager.Instantiate(GameDataManager.DirtEntity);
+                    else if (height <= GameDataManager.GrassLevel)
+                        instance = _world.EntityManager.Instantiate(GameDataManager.GrassEntity);
+                    else if (height <= GameDataManager.RockLevel)
+                        instance = _world.EntityManager.Instantiate(GameDataManager.RockEntity);
+                    else if (height <= GameDataManager.SnowLevel)
+                        instance = _world.EntityManager.Instantiate(GameDataManager.SnowEntity);
+                    else
+                        instance = _world.EntityManager.Instantiate(GameDataManager.SandEntity);
+
                     _world.EntityManager.SetComponentData(instance, new Translation() { Value = position });
+                    _world.EntityManager.SetComponentData(instance, new BlockData() { InitialPosition = position });
                 }
             }
 
             UpdateStaticFields();
+        }
+
+        void Update()
+        {
+            GameDataManager.PlayerPosition = _player.transform.position;
         }
 
         void OnValidate()
