@@ -14,15 +14,14 @@ namespace Game.Scripts
         [Space] [SerializeField] [Range(0, 10000)]
         private int _maxDucks = 0;
 
-        private BlobAssetStore _store = default;
-
         private World _world = default;
+
+        private BlobAssetStore _store = default;
 
         void Awake()
         {
-            _store = new BlobAssetStore();
-
             _world = World.DefaultGameObjectInjectionWorld;
+            _store = new BlobAssetStore();
             var settings = GameObjectConversionSettings.FromWorld(_world, _store);
             var entity = GameObjectConversionUtility.ConvertGameObjectHierarchy(_duckPrefab, settings);
 

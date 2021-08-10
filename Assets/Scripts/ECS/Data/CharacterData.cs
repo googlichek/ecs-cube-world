@@ -7,5 +7,7 @@ namespace Game.Scripts
     {
         public float Speed;
         public float RotationalSpeed;
+
+        public Entity BulletEntityTemplate;
     }
 }
