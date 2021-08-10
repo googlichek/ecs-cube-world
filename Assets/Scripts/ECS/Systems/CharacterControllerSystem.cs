@@ -22,6 +22,7 @@ namespace Game.Scripts
 
             var inputY = Input.GetAxis("Horizontal");
             var inputZ = Input.GetAxis("Vertical");
+            var shoot = Input.GetAxis("Fire1");
 
             Entities
                 .ForEach((ref PhysicsVelocity physicsVelocity, ref Rotation rotation, ref CharacterData characterData) =>
@@ -36,6 +37,27 @@ namespace Game.Scripts
                 })
                 .Schedule(Dependency)
                 .Complete();
+
+            Entities
+                .WithoutBurst()
+                .WithStructuralChanges()
+                .ForEach((
+                    ref PhysicsVelocity physicsVelocity,
+                    ref Translation translation,
+                    ref Rotation rotation,
+                    ref CharacterData characterData) =>
+                {
+                    if (shoot > 0)
+                    {
+                        var instance = EntityManager.Instantiate(characterData.BulletEntityTemplate);
+                        var offset = new float3(UnityEngine.Random.Range(-1, 2), 0, 1);
+
+                        EntityManager.SetComponentData(instance, new Translation() { Value = translation.Value + math.mul(rotation.Value, offset) });
+                        EntityManager.SetComponentData(instance, new Rotation() { Value = rotation.Value });
+                        EntityManager.SetComponentData(instance, new LifetimeData() { Entity = instance, Lifetime = 5 });
+                    }
+                })
+                .Run();
         }
     }
 }

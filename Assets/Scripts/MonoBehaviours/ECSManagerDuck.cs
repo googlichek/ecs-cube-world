@@ -28,7 +28,7 @@ namespace Game.Scripts
 
             var player = _world.EntityManager.Instantiate(playerEntityTemplate);
             _world.EntityManager.SetComponentData(player, new Translation() { Value = new float3(0, 2, 0) });
-            _world.EntityManager.SetComponentData(player, new CharacterData() { Speed = 5, BulletEntityTemplate = bulletEntityTemplate });
+            _world.EntityManager.SetComponentData(player, new CharacterData() { Speed = 5, RotationalSpeed = 5, BulletEntityTemplate = bulletEntityTemplate });
         }
 
         void OnDestroy()
