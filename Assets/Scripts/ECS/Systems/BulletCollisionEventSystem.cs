@@ -1,6 +1,5 @@
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Physics.Systems;
 
@@ -17,33 +16,33 @@ namespace Game.Scripts
             [ReadOnly]
             public ComponentDataFromEntity<BulletData> BulletGroup;
 
-            public ComponentDataFromEntity<PhysicsVelocity> PhysicsVelocityGroup;
+            public ComponentDataFromEntity<DestroyData> DestroyGroup;
 
             public void Execute(CollisionEvent collisionEvent)
             {
                 var entityA = collisionEvent.EntityA;
                 var entityB = collisionEvent.EntityB;
 
-                var isEtityATarget = PhysicsVelocityGroup.HasComponent(entityA);
-                var isEtityBTarget = PhysicsVelocityGroup.HasComponent(entityB);
+                var isEntityATarget = DestroyGroup.HasComponent(entityA);
+                var isEntityBTarget = DestroyGroup.HasComponent(entityB);
 
                 var isEntityABullet = BulletGroup.HasComponent(entityA);
                 var isEntityBBullet = BulletGroup.HasComponent(entityB);
 
-                if (isEntityABullet && isEtityBTarget)
+                if (isEntityABullet && isEntityBTarget)
                 {
-                    var velocityComponent = PhysicsVelocityGroup[entityA];
-                    velocityComponent.Linear = new float3(0, 50, 0);
+                    var component = DestroyGroup[entityB];
+                    component.ShouldDestroy = true;
 
-                    PhysicsVelocityGroup[entityB] = velocityComponent;
+                    DestroyGroup[entityB] = component;
                 }
 
-                if (isEntityBBullet && isEtityATarget)
+                if (isEntityBBullet && isEntityATarget)
                 {
-                    var velocityComponent = PhysicsVelocityGroup[entityB];
-                    velocityComponent.Linear = new float3(0, 50, 0);
+                    var component = DestroyGroup[entityA];
+                    component.ShouldDestroy = true;
 
-                    PhysicsVelocityGroup[entityB] = velocityComponent;
+                    DestroyGroup[entityA] = component;
                 }
             }
         }
@@ -56,13 +55,13 @@ namespace Game.Scripts
 
         protected override void OnUpdate()
         {
-            var jobHandle = new CollisionEventJob()
+            var job = new CollisionEventJob()
             {
                 BulletGroup = GetComponentDataFromEntity<BulletData>(),
-                PhysicsVelocityGroup = GetComponentDataFromEntity<PhysicsVelocity>()
+                DestroyGroup = GetComponentDataFromEntity<DestroyData>()
             };
 
-            Dependency = jobHandle.Schedule(_stepWorld.Simulation, ref _physicsWorld.PhysicsWorld, Dependency);
+            Dependency = job.Schedule(_stepWorld.Simulation, ref _physicsWorld.PhysicsWorld, Dependency);
             Dependency.Complete();
         }
     }
