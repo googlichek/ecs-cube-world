@@ -510,7 +510,7 @@ MonoBehaviour:
     m_Template: {fileID: 0}
     m_CollisionResponse:
       m_Override: 0
-      m_Value: 0
+      m_Value: 3
     m_Friction:
       m_Override: 0
       m_Value:
@@ -743,6 +743,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87cbf94432d400849943529a82b7246f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TriggerEffect:
+    x: 0
+    y: 250
+    z: 0
 --- !u!1 &1485810735
 GameObject:
   m_ObjectHideFlags: 0

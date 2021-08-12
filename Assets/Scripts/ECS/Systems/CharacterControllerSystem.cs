@@ -23,12 +23,19 @@ namespace Game.Scripts
             var shoot = Input.GetAxis("Fire1");
 
             Entities
-                .ForEach((ref PhysicsVelocity physicsVelocity, ref Rotation rotation, ref CharacterData characterData) =>
+                .ForEach((
+                    ref PhysicsVelocity physicsVelocity,
+                    ref PhysicsMass physicsMass,
+                    ref Rotation rotation,
+                    ref CharacterData characterData) =>
                 {
                     if (inputZ == 0)
                         physicsVelocity.Linear = float3.zero;
                     else
                         physicsVelocity.Linear += inputZ * deltaTime * characterData.Speed * math.forward(rotation.Value);
+
+                    physicsMass.InverseInertia[0] = 0;
+                    physicsMass.InverseInertia[2] = 0;
                     
                     rotation.Value =
                         math.mul(math.normalize(rotation.Value), quaternion.AxisAngle(math.up(), deltaTime * inputY * characterData.RotationalSpeed));
