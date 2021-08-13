@@ -8,8 +8,6 @@ namespace Game.Scripts
 {
     public class CharacterControllerSystem : SystemBase
     {
-        private EntityQuery _query = default;
-
         protected override void OnCreate()
         {
         }
