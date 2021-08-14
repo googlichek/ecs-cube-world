@@ -323,6 +323,7 @@ GameObject:
   - component: {fileID: 781614485}
   - component: {fileID: 781614487}
   - component: {fileID: 781614486}
+  - component: {fileID: 781614488}
   m_Layer: 0
   m_Name: TankTurret
   m_TagString: Untagged
@@ -394,6 +395,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 781614484}
   m_Mesh: {fileID: -476746044771901990, guid: 7cc975e0c28204485806b02e4457986e, type: 3}
+--- !u!114 &781614488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781614484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33f20f258c4678c408583d19508a87c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &782505200
 GameObject:
   m_ObjectHideFlags: 0
@@ -914,7 +927,6 @@ MonoBehaviour:
   - {fileID: 2021865361}
   - {fileID: 2046233963}
   - {fileID: 918858704}
-  _laserSpawnPositions: []
 --- !u!114 &1042863080
 MonoBehaviour:
   m_ObjectHideFlags: 0
