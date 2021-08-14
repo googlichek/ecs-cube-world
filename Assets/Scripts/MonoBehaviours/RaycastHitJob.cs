@@ -24,7 +24,6 @@ namespace Game.Scripts
         private StepPhysicsWorld _stepPhysicsWorld;
 
         private NativeList<Unity.Physics.RaycastHit> _raycastHits;
-        private NativeList<DistanceHit> _distancetHits;
 
         private RaycastInput _raycastInput = new RaycastInput();
 
@@ -52,7 +51,6 @@ namespace Game.Scripts
         void Awake()
         {
             _raycastHits = new NativeList<Unity.Physics.RaycastHit>(Allocator.Persistent);
-            _distancetHits = new NativeList<DistanceHit>(Allocator.Persistent);
 
             _buildPhysicsWorld = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<BuildPhysicsWorld>();
             _stepPhysicsWorld = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<StepPhysicsWorld>();
@@ -66,7 +64,6 @@ namespace Game.Scripts
             var rayDiraction = transform.forward * _distance;
 
             _raycastHits.Clear();
-            _distancetHits.Clear();
 
             _raycastInput = new RaycastInput()
             {
@@ -84,6 +81,11 @@ namespace Game.Scripts
             };
 
             job.Schedule().Complete();
+
+            foreach (var hit in _raycastHits)
+            {
+                ZombieGameDataManager.Instance.World.EntityManager.DestroyEntity(hit.Entity);
+            }
         }
 
         void OnDrawGizmos()
@@ -111,7 +113,6 @@ namespace Game.Scripts
         void OnDestroy()
         {
             _raycastHits.Dispose();
-            _distancetHits.Dispose();
         }
     }
 }

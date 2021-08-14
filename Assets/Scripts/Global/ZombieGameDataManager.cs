@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -13,6 +14,10 @@ namespace Game.Scripts
 
         [SerializeField]
         private List<Transform> _waypoints = new List<Transform>();
+
+        private World _world = default;
+
+        public World World => _world;
 
         public List<float3> Waypoints { get; private set; }
 
@@ -32,6 +37,8 @@ namespace Game.Scripts
             {
                 Waypoints.Add(_waypoints[i].position);
             }
+
+            _world = World.DefaultGameObjectInjectionWorld;
         }
     }
 }
