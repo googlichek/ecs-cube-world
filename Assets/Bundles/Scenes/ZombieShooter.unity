@@ -339,8 +339,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 781614484}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.44724146, z: 0.06}
-  m_LocalScale: {x: 1.0802802, y: 1.0802802, z: 1.0802802}
+  m_LocalPosition: {x: 0, y: 0.89448285, z: 0.059999973}
+  m_LocalScale: {x: 1.0802802, y: 2.1605604, z: 1.0802802}
   m_Children: []
   m_Father: {fileID: 1169848456}
   m_RootOrder: 0
@@ -404,11 +404,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 781614484}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33f20f258c4678c408583d19508a87c6, type: 3}
+  m_Script: {fileID: 11500000, guid: 667d74c6b04f7774fb7b9aaeb6112180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _distance: 10
-  _shouldCollectAllHits: 0
+  _shouldCollectAllHits: 1
   _shouldDrawSurfaceNormals: 0
 --- !u!1 &782505200
 GameObject:
@@ -955,7 +955,6 @@ GameObject:
   - component: {fileID: 1169848456}
   - component: {fileID: 1169848455}
   - component: {fileID: 1169848454}
-  - component: {fileID: 1169848453}
   - component: {fileID: 1169848457}
   m_Layer: 0
   m_Name: TankBase
@@ -964,20 +963,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!136 &1169848453
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1169848452}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!23 &1169848454
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1037,7 +1022,7 @@ Transform:
   m_GameObject: {fileID: 1169848452}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.54, y: 0.5, z: 0.95}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2, y: 1, z: 2}
   m_Children:
   - {fileID: 781614485}
   m_Father: {fileID: 0}
