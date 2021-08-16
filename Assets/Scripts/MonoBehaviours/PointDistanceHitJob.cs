@@ -5,6 +5,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Physics.Systems;
+using Unity.Transforms;
 using UnityEngine;
 
 namespace Game.Scripts
@@ -24,6 +25,10 @@ namespace Game.Scripts
         private StepPhysicsWorld _stepPhysicsWorld;
 
         private NativeList<DistanceHit> _distanceHits;
+
+        private Entity _colsestEntity = Entity.Null;
+
+        private Vector3 _lockOnPosition = Vector3.zero;
 
         private PointDistanceInput _pointDistanceInput = new PointDistanceInput();
 
@@ -81,10 +86,32 @@ namespace Game.Scripts
 
             job.Schedule().Complete();
 
-            //foreach (var hit in _distanceHits)
-            //{
-            //    ZombieGameDataManager.Instance.World.EntityManager.DestroyEntity(hit.Entity);
-            //}
+            if (!ZombieGameDataManager.Instance.World.EntityManager.Exists(_colsestEntity))
+            {
+                var closestDistance = Mathf.Infinity;
+
+                foreach (var hit in _distanceHits)
+                {
+                    Assert.IsTrue(hit.RigidBodyIndex >= 0 && hit.RigidBodyIndex < _buildPhysicsWorld.PhysicsWorld.NumBodies);
+                    Assert.IsTrue(math.abs(math.lengthsq(hit.SurfaceNormal) - 1.0f) < 0.01f);
+
+                    var entity = _buildPhysicsWorld.PhysicsWorld.Bodies[hit.RigidBodyIndex].Entity;
+                    var hasComponent =
+                        ZombieGameDataManager.Instance.World.EntityManager.HasComponent<ZombieData>(entity);
+
+                    if (closestDistance > hit.Distance && hasComponent)
+                    {
+                        closestDistance = hit.Distance;
+                        _colsestEntity = entity;
+                        _lockOnPosition = ZombieGameDataManager.Instance.World.EntityManager
+                            .GetComponentData<Translation>(entity).Value;
+                    }
+
+                }
+            }
+
+            transform.LookAt(_lockOnPosition);
+            ZombieGameDataManager.Instance.World.EntityManager.DestroyEntity(_colsestEntity);
         }
 
         void OnDrawGizmos()
